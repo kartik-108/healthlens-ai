@@ -1,0 +1,1 @@
+DISCLAIMER_TEXT = "HealthLens AI is a health assistant, not a doctor."
