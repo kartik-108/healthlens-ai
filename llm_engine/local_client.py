@@ -15,17 +15,17 @@ class LocalClient(BaseLLMClient):
             try:
                 print("Calling Ollama locally...")
                 response = requests.post(
-                    OLLAMA_URL,
-                    json={
-                        "model": "llama3.2:latest",
-                        "prompt": prompt,
-                        "stream": False,
-                        "options": {
-                            "temperature": 0.2
-                        }
-                    },
-                    timeout=120
-                )
+                OLLAMA_URL,
+                json={
+                    "model": "llama3.1:latest",
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.2
+                    }
+                },
+                timeout=120
+            )
 
                 if response.status_code != 200:
                     print("Status Code:", response.status_code)

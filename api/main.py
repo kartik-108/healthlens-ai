@@ -1,5 +1,6 @@
 from core.env_loader import load_dotenv  # noqa: F401
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from core.ai_core import run_ai_pipeline
 from safety_layer.prompt_guard import guard_user_input
@@ -27,6 +28,15 @@ def is_health_query(message: str) -> bool:
 
 app = FastAPI(title="HealthLens AI")
 
+# ✅ CORS FIX (IMPORTANT)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # production me domain daalna
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 class ChatRequest(BaseModel):
     message: str
@@ -35,7 +45,6 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat(request: ChatRequest):
     try:
-
         # 1️⃣ Input safety
         safe_message = guard_user_input(request.message)
 
